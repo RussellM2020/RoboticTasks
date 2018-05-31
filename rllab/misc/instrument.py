@@ -392,6 +392,9 @@ def run_experiment_lite(
     """
     assert stub_method_call is not None or batch_tasks is not None, "Must provide at least either stub_method_call or batch_tasks"
 
+
+
+   
     if use_cloudpickle is None:
         for maybe_stub in (batch_tasks or [stub_method_call]):
             # decide mode

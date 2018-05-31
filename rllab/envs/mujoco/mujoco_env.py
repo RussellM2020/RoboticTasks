@@ -190,9 +190,15 @@ class MujocoEnv(Env):
         self.dcom = new_com - self.current_com
         self.current_com = new_com
 
+    def viewer_setup(self):
+        pass
+
+
     def get_viewer(self):
         if self.viewer is None:
             self.viewer = MjViewer()
+
+            self.viewer_setup()
             self.viewer.start()
             self.viewer.set_model(self.model)
         return self.viewer

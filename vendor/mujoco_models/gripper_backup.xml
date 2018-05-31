@@ -1,0 +1,86 @@
+<mujoco model="gripper">
+    <compiler angle="radian" coordinate="local" inertiafromgeom="true" meshdir="mesh" texturedir="textures" />
+    <!--option gravity="0 0 -9.81" integrator="Euler" iterations="20" timestep="0.01" /-->
+
+    <default>
+        <joint armature="0.04" damping="1" limited="true" />
+        <geom conaffinity="0" condim="1" contype="0" density="10" friction=".8 .1 .1" margin="0.002" />
+    </default>
+
+    <asset>
+
+        <texture name="texgeom" type="cube" builtin="flat" mark="cross" width="127" height="1278" rgb1="0.8 0.6 0.4" rgb2="0.8 0.6 0.4" markrgb="1 1 1" random="0.01" />
+        <material name='MatPlane' texture="texgeom" shininess="1" texrepeat="60 60" specular="1"  reflectance="0.5" />
+    </asset>
+    <worldbody>
+        <light diffuse=".5 .5 .5" dir="0 0 -1" pos="0 0 3" />
+
+        <geom conaffinity="1" contype="1" name="table" pos="0 0 0" size="10 10 0.1" type="plane" rgba='0.8 0.9 0.8 1' />
+    
+        
+        <!-- <light directional="true" cutoff="40" exponent="10" diffuse=".4 .4 .4" specular=".7 .7 .7" pos="0 0 1.5" dir="0 0 -1"/> -->
+
+        
+<!--  ================= BEGIN GRIPPER ================= /-->
+                                               
+
+        <body name="claw" pos="0 0 0.3" quat="1 0 1 0">
+
+            <geom name="rail" type="box" pos="-0.05 0 0" size="0.005 0.055 0.005" friction="0.001 0.005 0.0001" rgba="0.5 0.5 0.5 1.0"/>
+
+            <joint name="vertical" type="slide" pos="0 0 0" axis="0 1 0" range= "-0.25 0.25"  user="008" stiffness="10" limited="true"/>
+
+
+            <body name="rightclaw" pos="0 -0.05 0" >
+                <geom name="rightclaw_it"  type="box" pos="0 0 0" size="0.045 0.005 0.005" friction="0.001 0.005 0.0001" rgba="1.0 1.0 1.0 1.0" contype="1" conaffinity="1"/>
+                <site name="rightEndeffector" pos="0 0 0" size="0.01" />
+
+                <joint name="r_close" type="slide" pos="0 0 0" axis="0 1 0" range= "0 0.04"  user="008" stiffness="10" limited="true"/>
+            </body>
+        
+           
+            <body name="leftclaw" pos="0 0.05 0">
+                <geom name="leftclaw_it"  type="box" pos="0 0 0" size="0.045 0.005 0.005" friction="0.001 0.005 0.0001" rgba="0.0 1.0 1.0 1.0" contype="1" conaffinity="1"/>
+                <site name="leftEndeffector" pos="0 0 0" size="0.01" />
+
+                <joint name="l_close" type="slide" pos="0 0 0" axis="0 1 0" range= "-0.04 0"  user="008" stiffness="10" limited="true"/>
+
+            </body>
+        </body>
+                                         
+<!--  ================= END GRIPPER ================= /-->
+
+
+        <body name="obj1" pos="0 0. 0.025">
+            <joint axis="1 0 0" damping="0" name="obj1_slidex" pos="0 0 0"  type="free" limited="false" />
+           
+            <geom conaffinity="1" contype="1" pos="0 0 0" density="0.05" size="0.025 0.025 0.025" rgba="1 0. 0 1" type="box" />
+        </body>
+
+
+<!--    
+        <body name="block" pos="0 0 0.025">
+            <joint name="blockjoint" type="slide" axis="0 1 0" limited='false' damping="0" armature="0" />
+           
+            <inertial pos="0 0 0" mass=".1" diaginertia="100000 100000 100000"/>
+            <geom name="blockbox" type="box" pos="0 0 0"
+                  size="0.025 0.025 0.025" rgba=".1 .1 .9 1" contype="1" conaffinity="1" 
+            />
+            <site name="block" pos="0 0 0" size="0.01" />
+        </body>
+    
+/-->
+        
+    </worldbody>
+
+
+    <actuator>
+      
+        
+        <motor gear="1" joint="vertical" ctrllimited="true" ctrlrange="-1.0 1.0"/>
+        <motor gear="1" joint="r_close" ctrllimited="true" ctrlrange="-1.0 1.0"/>
+        <motor gear="1" joint="l_close" ctrllimited="true" ctrlrange="-1.0 1.0"/>
+    
+    </actuator>
+
+</mujoco>

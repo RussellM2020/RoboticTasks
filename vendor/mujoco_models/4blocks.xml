@@ -1,0 +1,58 @@
+<mujoco model="arm3d">
+    <compiler angle="radian" coordinate="local" inertiafromgeom="true" meshdir="mesh" texturedir="textures" />
+    <option gravity="0 0 0" integrator="Euler" iterations="20" timestep="0.01" />
+
+    <default>
+        <joint armature="0.04" damping="1" limited="true" />
+        <geom conaffinity="0" condim="1" contype="0" density="10" friction=".8 .1 .1" margin="0.002" />
+    </default>
+
+    <asset>
+
+        <texture name="texgeom" type="cube" builtin="flat" mark="cross" width="127" height="1278" rgb1="0.8 0.6 0.4" rgb2="0.8 0.6 0.4" markrgb="1 1 1" random="0.01" />
+        <material name='MatPlane' texture="texgeom" shininess="1" texrepeat="60 60" specular="1"  reflectance="0.5" />
+    </asset>
+    <worldbody>
+        <light diffuse=".5 .5 .5" dir="0 0 -1" pos="0 0 3" />
+
+        <geom conaffinity="1" contype="1" condim="1" name="table" pos="0 0.5 -0.325" size="10 10 0.1" type="plane" rgba='255 255 255 1' />
+
+        
+
+        <body name="obj1" pos="-0.2 0. -0.325">
+            <joint axis="1 0 0" damping="1.5" name="obj1_slidex" pos="0 0 0.05" range="-0.3 0.3" type="slide" />
+           
+            <geom conaffinity="0" contype="0" pos="0 0 0.05" density="0.0005" size="0.02 0.02 0.05" rgba="0 0. 0 1" type="box" />
+        </body>
+
+        <body name="obj2" pos="0.2 -0. -0.325">
+            <joint axis="1 0 0" damping="1.5" name="obj2_slidex" pos="0 0 0.05" range="-0.3 0.3" type="slide" />
+            
+            <geom conaffinity="0" contype="0" pos="0 0 0.05" density="0.0005" size="0.02 0.02 0.05" rgba="0. 0. 0 1" type="box" />
+        </body>
+
+        <body name="obj3" pos="0 -0.2 -0.325">
+            
+            <joint axis="0 1 0" damping="1.5" name="obj3_slidey" pos="0 0 0.05" range="-0.3 0.3" type="slide" />
+            <geom conaffinity="0" contype="0" pos="0 0 0.05" density="0.0005" size="0.02 0.02 0.05" rgba="0 0 0. 1" type="box" />
+        </body>
+
+        <body name="obj4" pos="0 0.2 -0.325">
+           
+            <joint axis="0 1 0" damping="1.5" name="obj4_slidey" pos="0 0 0.05" range="-0.3 0.3" type="slide" />
+            <geom conaffinity="0" contype="0" pos="0 0 0.05" density="0.0005" size="0.02 0.02 0.05" rgba="0 0. 0 1" type="box" />
+        </body>
+
+        
+
+
+    </worldbody>
+
+    <actuator>
+        <motor ctrllimited="true" ctrlrange="-2.0 2.0" joint="obj1_slidex" />
+        <motor ctrllimited="true" ctrlrange="-2.0 2.0" joint="obj2_slidex" />
+        <motor ctrllimited="true" ctrlrange="-2.0 2.0" joint="obj3_slidey" />
+        <motor ctrllimited="true" ctrlrange="-2.0 2.0" joint="obj4_slidey" />
+    </actuator>
+
+</mujoco>

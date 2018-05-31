@@ -5,6 +5,9 @@ import time
 
 def rollout(env, agent, max_path_length=np.inf, animated=False, speedup=1,
             always_return_paths=False):
+
+    
+   
     observations = []
     actions = []
     rewards = []
